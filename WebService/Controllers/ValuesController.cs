@@ -24,11 +24,11 @@ namespace WebService.Controllers.API
         }
 
         // GET api/values/5
-        public Cliente Get(int id)
+        public LoginModel Get(int id, string nombre)
         {
-            Cliente client = new Cliente();
+            LoginModel client = new LoginModel();
 
-            client = clienteManager.ObtenerCliente(id);
+            client = clienteManager.ObtenerCliente(id, nombre);
 
             return client;
         }

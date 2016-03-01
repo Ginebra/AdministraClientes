@@ -9,7 +9,7 @@ namespace WebService.Controllers
 {
     public class HomeController : Controller
     {
-        ClientesController objClientes;
+     
         ClienteManager clienteManager;
         public ActionResult Index()
         {
@@ -27,13 +27,11 @@ namespace WebService.Controllers
             var display = Userloginvalues().Where(m => m.UserName == objuserlogin.UserName && m.UserPassword == objuserlogin.UserPassword).FirstOrDefault();
             if (display != null)
             {
-                ViewBag.Status = "CORRECT UserNAme and Password";
-
                 listaClientes = clienteManager.ObtenerClientes(); 
             }
             else
             {
-                ViewBag.Status = "INCORRECT UserName or Password";
+                ViewBag.Status = "Usuario y/o contraseña incorrectos";
 
                 return View("Index");
             }

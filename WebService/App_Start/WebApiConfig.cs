@@ -18,18 +18,19 @@ namespace WebService
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{id}&{nombre}",
+                defaults: new { id = RouteParameter.Optional, nombre = RouteParameter.Optional}
             );
 
             config.Routes.MapHttpRoute(
               "AccesoCliente",
-              "Api/Clientes/Cliente/{id}",
+              "Api/Clientes/Cliente/{id}&{nombre}",
               new
               {
                   controller = "Clientes",
                   action = "Cliente",
-                  id = RouteParameter.Optional
+                  id = RouteParameter.Optional,
+                  nombre = RouteParameter.Optional
               });
 
             config.Routes.MapHttpRoute(
@@ -44,11 +45,12 @@ namespace WebService
 
             config.Routes.MapHttpRoute(
                 "Api_default",
-                "Api/{controller}/{action}/{id}",
+                "Api/{controller}/{action}/{id}&{nombre}",
                 new
                 {
                     action = "Index",
-                    id = RouteParameter.Optional
+                    id = RouteParameter.Optional,
+                    nombre = RouteParameter.Optional
                 }
             );
         }

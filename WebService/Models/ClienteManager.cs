@@ -5,13 +5,14 @@ using System.Web;
 using WebService.Controllers;
 using Npgsql;
 using WebService.Models;
+using System.Configuration;
 
 namespace WebService.Models
 {
     public class ClienteManager
     {
 
-        private static string cadenaConexion = System.Configuration.ConnectionStringSettings("DBUsers");
+        string cadenaConexion = ConfigurationManager.ConnectionStrings["DBUsers"].ConnectionString;
 
         public bool InsertarCliente(Cliente cli)
         {
@@ -54,9 +55,9 @@ namespace WebService.Models
             return (res == 1);
         }
 
-        public Cliente ObtenerCliente(int id)
+        public LoginModel ObtenerCliente(int id, string nombre)
         {
-            Cliente cli = null;
+            LoginModel cli = null;
 
             NpgsqlConnection con = new NpgsqlConnection(cadenaConexion);
 
@@ -67,17 +68,16 @@ namespace WebService.Models
             NpgsqlCommand cmd = new NpgsqlCommand(sql, con);
 
             cmd.Parameters.Add("@idcliente",NpgsqlTypes.NpgsqlDbType.Integer).Value = id;
-           // cmd.Parameters.Add("@telefono", NpgsqlTypes.NpgsqlDbType.Text).Value = telefono;
+            cmd.Parameters.Add("@telefono", NpgsqlTypes.NpgsqlDbType.Text).Value = nombre;
 
             NpgsqlDataReader reader =
                 cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
 
             if (reader.Read())
             {
-                cli = new Cliente();
-                cli.Id = id;
-                cli.Nombre = reader.GetString(0);
-                cli.Telefono = reader.GetString(1);
+                cli = new LoginModel();
+                cli.UserName = reader.GetString(0);
+                cli.UserPassword = reader.GetString(1);
             }
 
             reader.Close();
